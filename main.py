@@ -1,30 +1,87 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk
 
+
+def tela4():
+    
+    def get_ano():
+        print(ano_busca.get())
+
+
+    lista_anos = []
+
+    arquivo = open("arquivo.txt", "r")
+    for e in arquivo:
+        linha = e.split(" | ")
+        if linha[1] not in lista_anos:
+            lista_anos.append(linha[1])
+    
+    lista_anos.sort()
+    
+    arquivo.close()
+
+
+    window = Tk()
+    window.title("Spotify List")
+    window.geometry("600x800+650+80")
+    window.resizable(0,0)
+    window.configure(bg="#040404")
+
+    var = IntVar()
+    r_btn1 = Radiobutton(window, text="Anterior a", variable=var, value=1, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    r_btn1.place(x=30, y=50)
+
+    r_btn2 = Radiobutton(window, text="Igual a", variable=var, value=2, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    r_btn2.place(x=30, y=100)
+
+    r_btn3 = Radiobutton(window, text="Posterior a", variable=var, value=3, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    r_btn3.place(x=30, y=150)
+
+    ano_busca = ttk.Combobox(window, values=lista_anos)
+    ano_busca.place(x=250, y=100)
+
+    btn_busca = Button(window, text="Buscar", bg="gray", fg="black", command=get_ano)
+    btn_busca.place(x=450, y=98)
+
+
+    window.mainloop()
 
 def tela3():
     def get_tela2():
         window.destroy()
         tela2()
+    
+    def get_tela4():
+        window.destroy()
+        tela4()
 
     registros = []
-    arquivo = open("arquivo.txt", "r", encoding="utf-8")
-    for linha in arquivo:
-        dados = linha.split(" | ")
-        registros.append(dados)
+    try:
+        arquivo = open("arquivo.txt", "r", encoding="utf-8")
+        for linha in arquivo:
+            dados = linha.split(" | ")
+            registros.append(dados)
 
-    arquivo.close()
+        arquivo.close()
+    except:
+        arquivo = open("arquivo.txt", "a", encoding="utf-8")
+        arquivo.close()
 
     window = Tk()
     window.title("Spotify List")
-    window.geometry("600x800")
+    window.geometry("600x800+650+80")
+    window.resizable(0,0)
     window.configure(bg="#040404")
+
+    btn_pesquisar = Button(window, text="Pesquisar", bg="gray", fg="black", font="Arial 12 bold", bd=2, command=get_tela4)
+    btn_pesquisar.place(x=490, y=12)
 
     lb1 = Label(window, text="Dados cadastrados", bg="#040404", fg="#24cb5b", font="Arial 16 bold")
     lb1.pack()
 
     btn1 = Button(window, text="Voltar", bg="gray", width=25, command=get_tela2)
-    btn1.place(x=200, y=600)
+    btn1.place(x=200, y=700)
 
     lb2 = Label(window, text="Nome do álbum", bg="#040404", fg="#24cb5b", font="Arial 13 bold")
     lb2.place(x=20, y=50)
@@ -62,23 +119,25 @@ def tela2():
         if status != False:
             dados = []
 
-            ialbum = str(entrada_album.get().capitalize())
+            ialbum = str(entrada_album.get().lower())
             dados.append(ialbum)
 
             ilancamento = str(entrada_ano_lancamento.get())
             dados.append(ilancamento)
 
-            ibanda_artista = str(entrada_banda_artista.get().capitalize())
+            ibanda_artista = str(entrada_banda_artista.get().lower())
             dados.append(ibanda_artista)
 
-            isim_nao = str(entrada_sim_nao.get().capitalize())
-            dados.append(isim_nao)
+            isim_nao = var.get()
+            if isim_nao == 1:
+                dados.append("sim")
+            else:
+                dados.append("não")
 
             # FAZ OS ENTRYS SEREM LIMPOS
             entrada_album.delete("0", "end")
             entrada_banda_artista.delete("0", "end")
             entrada_ano_lancamento.delete("0", "end")
-            entrada_sim_nao.delete("0", "end")
             
             valid = True
             for e in dados:
@@ -88,6 +147,7 @@ def tela2():
 
             if (valid == True):
                 albuns_salvos = []
+
                 arquivo = open("arquivo.txt", "r", encoding="utf-8")
                 for e in arquivo:
                     e = e.split(" | ")
@@ -117,7 +177,8 @@ def tela2():
     # JANELA
     window = Tk()
     window.title("Spotify List")
-    window.geometry("500x250")
+    window.geometry("500x250+700+300")
+    window.resizable(0,0)
     window.configure(bg="#040404")
 
     # LABELS E ENTRY
@@ -143,8 +204,12 @@ def tela2():
                          bg="#040404")
     ultimo_album.pack()
 
-    entrada_sim_nao = Entry(window, width=30)
-    entrada_sim_nao.pack()
+    var = IntVar()
+    entrada_sim = Radiobutton(window, text="Sim", variable=var, value=1, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    entrada_sim.place(x=160, y=170)
+
+    entrada_nao = Radiobutton(window, text="Não", variable=var, value=0, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    entrada_nao.place(x=270, y=170)
 
     # BOTÕES
     botao_salvar = Button(window, text="Cadastrar", bg="#040404", fg="#24cb5b", font="Arial 10 bold", command=store)
@@ -164,7 +229,8 @@ def tela1():
 
     window = Tk()
     window.title("Spotify List")
-    window.geometry("500x250")
+    window.geometry("500x250+700+300")
+    window.resizable(0,0)
     window.configure(bg="#040404")
     # O PARÂMETRO True DEFINE QUE ESSA logo_top.ico TAMBÉM SE APLICA PARA AS OUTRAS TELAS TOPLEVEL
     window.iconbitmap(True, "img/logo_top.ico")
@@ -174,7 +240,7 @@ def tela1():
 
     img = PhotoImage(file="img/spotify-logo.png")
 
-    btn1 = Button(window, image=img, width=160, height=120, bd=2, bg="#040404", command=get_tela2)
+    btn1 = Button(window, image=img, width=160, height=120, bd=2, bg="#040404", cursor = "exchange", command=get_tela2)
     btn1.place(x=170, y=90)
 
     window.mainloop()
