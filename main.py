@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 
 def tela3():
@@ -55,36 +56,52 @@ def tela3():
     window.mainloop()
 
 def tela2():
-    dados = []
     def store():
-        dados = []
-        
-        ialbum = str(entrada_album.get().capitalize())
-        dados.append(ialbum)
-
-        ilançamento = str(entrada_ano_lancamento.get())
-        dados.append(ilançamento)
-
-        ibanda_artista = str(entrada_banda_artista.get().capitalize())
-        dados.append(ibanda_artista)
-
-        isim_nao = str(entrada_sim_nao.get().capitalize())
-        dados.append(isim_nao)
-
-        valid = True
-        for e in dados:
-            if ( e == "" or e.isspace() ): # VALIDAÇÃO DOS DADOS
-                valid = False
-                break
-        
-        if valid == True:
-            dados_p_salvar = " | ".join(dados)
-
-            dados_para_salvar = dados_p_salvar + '\n'
-            arquivo = open("arquivo.txt", "a", encoding="utf-8")
-            arquivo.write(dados_para_salvar)
+        status = messagebox.askyesno(message="Tem certeza que deseja cadastrar ?")
+        if status != False:
+            dados = []
             
-            arquivo.close()
+            ialbum = str(entrada_album.get().capitalize())
+            dados.append(ialbum)
+
+            ilançamento = str(entrada_ano_lancamento.get())
+            dados.append(ilançamento)
+
+            ibanda_artista = str(entrada_banda_artista.get().capitalize())
+            dados.append(ibanda_artista)
+
+            isim_nao = str(entrada_sim_nao.get().capitalize())
+            dados.append(isim_nao)
+
+            valid = True
+            for e in dados:
+                if ( e == "" or e.isspace() ): # VALIDAÇÃO DOS DADOS
+                    valid = False
+                    break
+            
+            if valid == True:
+                albuns_salvos = []
+                arquivo = open("arquivo.txt", "r", encoding="utf-8")
+                for e in arquivo:
+                    e = e.split(" | ")
+                    albuns_salvos.append(e[0])
+                
+                arquivo.close()
+
+                if dados[0] not in albuns_salvos and dados[1].isnumeric():
+                    dados_p_salvar = " | ".join(dados)
+
+                    dados_para_salvar = dados_p_salvar + '\n'
+
+                    arquivo = open("arquivo.txt", "a", encoding="utf-8")
+                    arquivo.write(dados_para_salvar)
+                    
+                    arquivo.close()
+                    status = messagebox.showinfo(message="Dados cadastrados com sucesso !")
+                else:
+                    status = messagebox.showerror(message="Algo deu errado, tente novamente.")
+            else:
+                status = messagebox.showerror(message="Algo deu errado, tente novamente")
     
     def get_tela3():
         window.destroy()
