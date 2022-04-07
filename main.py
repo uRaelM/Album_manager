@@ -86,7 +86,7 @@ def tela2():
                     valid = False
                     break
 
-            if valid == True:
+            if (valid == True):
                 albuns_salvos = []
                 arquivo = open("arquivo.txt", "r", encoding="utf-8")
                 for e in arquivo:
@@ -95,7 +95,7 @@ def tela2():
 
                 arquivo.close()
 
-                if dados[0] not in albuns_salvos and dados[1].isnumeric():
+                if (dados[0] not in albuns_salvos and dados[1].isnumeric()):
                     dados_p_salvar = " | ".join(dados)
 
                     dados_para_salvar = dados_p_salvar + '\n'
