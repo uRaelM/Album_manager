@@ -74,7 +74,7 @@ def tela2():
             isim_nao = str(entrada_sim_nao.get().capitalize())
             dados.append(isim_nao)
 
-            # FAZ AS CAIXAS DE TEXTO DA LABEL SEREM LIMPAS
+            # FAZ OS ENTRYS SEREM LIMPOS
             entrada_album.delete("0", "end")
             entrada_banda_artista.delete("0", "end")
             entrada_ano_lancamento.delete("0", "end")
