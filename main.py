@@ -97,11 +97,11 @@ def tela2():
                     arquivo.write(dados_para_salvar)
                     
                     arquivo.close()
-                    status = messagebox.showinfo(message="Dados cadastrados com sucesso !")
+                    messagebox.showinfo(message="Dados cadastrados com sucesso !")
                 else:
-                    status = messagebox.showerror(message="Algo deu errado, tente novamente.")
+                    messagebox.showerror(message="Algo deu errado, tente novamente.")
             else:
-                status = messagebox.showerror(message="Algo deu errado, tente novamente")
+                messagebox.showerror(message="Algo deu errado, tente novamente")
     
     def get_tela3():
         window.destroy()
