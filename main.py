@@ -17,9 +17,9 @@ def tela4():
         if linha[1] not in lista_anos:
             lista_anos.append(linha[1])
     
-    lista_anos.sort()
-    
     arquivo.close()
+    
+    lista_anos.sort()
 
 
     window = Tk()
