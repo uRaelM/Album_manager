@@ -170,7 +170,7 @@ def tela1():
     window.iconbitmap(True, "img/logo_top.ico")
 
     lb1 = Label(window, text="Spotify List", font="Arial 16 bold", fg="#24cb5b", bg="#040404")
-    lb1.place(x=200, y=30)
+    lb1.place(x=192, y=30)
 
     img = PhotoImage(file="img/spotify-logo.png")
 
