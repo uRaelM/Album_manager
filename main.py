@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+import os
 
 
 def tela4():
@@ -28,6 +29,8 @@ def tela4():
             elif v_radio_p == 3:
                 if linha[1] >= ano:
                     l_busca.append(linha[0])
+        
+        arquivo.close()
 
 #       Usei exatamente o mesmo sistema de listagem da tela 3, para listar os albuns buscados por ano na tela 4:
 #       crio um for pra criar labels com os valores armazenados na lista e crio uma posição que vai se modificando
@@ -122,38 +125,40 @@ def tela3():
     btn1 = Button(window, text="Voltar", bg="gray", width=25, command=get_tela2)
     btn1.place(x=200, y=700)
 
-    lb2 = Label(window, text="Nome do álbum", bg="#040404", fg="#24cb5b", font="Arial 13 bold")
-    lb2.place(x=20, y=50)
-    eixo_x = 30
-    eixo_y = 90
-    for e in registros:
-        exibicao = Label(window, text=e[0], bg="#040404", fg="#24cb5b", font="Arial 10 bold")
-        exibicao.place(x=eixo_x, y=eixo_y)
-        eixo_y += 30
+    style = ttk.Style(window)
+    style.theme_use("classic")
+    style.configure("Treeview", font="Arial 10 bold", background="#ced0ba", foreground="#040404")
+    style.configure("Heading", font="Arial 12 bold", foreground="#040404")
 
-    lb2 = Label(window, text="Nome do artista", bg="#040404", fg="#24cb5b", font="Arial 13 bold")
-    lb2.place(x=230, y=50)
-    eixo_x = 250
-    eixo_y = 90
-    for e in registros:
-        exibicao = Label(window, text=e[2], bg="#040404", fg="#24cb5b", font="Arial 10 bold")
-        exibicao.place(x=eixo_x, y=eixo_y)
-        eixo_y += 30
+    treeview = ttk.Treeview(window, columns=("1", "2", "3"), show="headings")
+    scroll = ttk.Scrollbar(window, orient="vertical", command=treeview.yview)
+    scroll.place(x=525, y=100, height=227)
+    treeview.configure(yscrollcommand=scroll.set)
 
-    lb2 = Label(window, text="Ano de lançamento", bg="#040404", fg="#24cb5b", font="Arial 13 bold")
-    lb2.place(x=430, y=50)
-    eixo_x = 470
-    eixo_y = 90
+    treeview.column("1", minwidth=0, width=150)
+    treeview.column("2", minwidth=0, width=150)
+    treeview.column("3", minwidth=0, width=155)
+    
+    treeview.heading("1", text="Nome do álbum")
+    treeview.heading("2", text="Nome do artista")
+    treeview.heading("3", text="Ano de lançamento")
+
+    treeview.place(x=70, y=100)
+
     for e in registros:
-        exibicao = Label(window, text=e[1], bg="#040404", fg="#24cb5b", font="Arial 10 bold")
-        exibicao.place(x=eixo_x, y=eixo_y)
-        eixo_y += 30
+        treeview.insert("", "end", values=[f"     {e[0]}", f"     {e[2]}", f"    {e[1]}"])
 
     window.mainloop()
 
 
 def tela2():
+
+    def get_tela3():
+        window.destroy()
+        tela3()
+
     def store():
+
         status = messagebox.askyesno(message="Tem certeza que deseja cadastrar ?")
         if status != False:
             dados = []
@@ -187,31 +192,42 @@ def tela2():
             if (valid == True):
                 albuns_salvos = []
 
-                arquivo = open("arquivo.txt", "r", encoding="utf-8")
-                for e in arquivo:
-                    e = e.split(" | ")
-                    albuns_salvos.append(e[0])
-
-                arquivo.close()
-
-                if (dados[0] not in albuns_salvos and dados[1].isnumeric()):
-                    dados_p_salvar = " | ".join(dados)
-
-                    dados_para_salvar = dados_p_salvar + '\n'
-
-                    arquivo = open("arquivo.txt", "a", encoding="utf-8")
-                    arquivo.write(dados_para_salvar)
+                try:
+                    arquivo = open("arquivo.txt", "r", encoding="utf-8")
+                    for e in arquivo:
+                        e = e.split(" | ")
+                        albuns_salvos.append(e[0])
 
                     arquivo.close()
-                    messagebox.showinfo(message="Dados cadastrados com sucesso !")
-                else:
-                    messagebox.showerror(message="Algo deu errado, tente novamente.")
-            else:
-                messagebox.showerror(message="Algo deu errado, tente novamente")
+                except:
+                    if (dados[1].isnumeric()):
+                        dados_p_salvar = " | ".join(dados)
 
-    def get_tela3():
-        window.destroy()
-        tela3()
+                        dados_para_salvar = dados_p_salvar + '\n'
+
+                        arquivo = open("arquivo.txt", "a", encoding="utf-8")
+                        arquivo.write(dados_para_salvar)
+
+                        arquivo.close()
+                        messagebox.showinfo(message="Dados cadastrados com sucesso !")
+                    else:
+                        messagebox.showerror(message="Esse álbum já existe, ou você não preencheu os dados corretamente.")
+                        
+                else:
+                    if (dados[0] not in albuns_salvos and dados[1].isnumeric()):
+                        dados_p_salvar = " | ".join(dados)
+
+                        dados_para_salvar = dados_p_salvar + '\n'
+
+                        arquivo = open("arquivo.txt", "a", encoding="utf-8")
+                        arquivo.write(dados_para_salvar)
+
+                        arquivo.close()
+                        messagebox.showinfo(message="Dados cadastrados com sucesso !")
+                    else:
+                        messagebox.showerror(message="Esse álbum já existe, ou você não preencheu os dados corretamente.")
+            else:
+                messagebox.showerror(message="Preencha todos os campos.")
 
     # JANELA
     window = Tk()
@@ -248,7 +264,7 @@ def tela2():
                               font="Arial 10 bold")
     entrada_sim.place(x=160, y=170)
 
-    entrada_nao = Radiobutton(window, text="Não", variable=var, value=0, bg="#040404", fg="#24cb5b",
+    entrada_nao = Radiobutton(window, text="Não", variable=var, value=2, bg="#040404", fg="#24cb5b",
                               font="Arial 10 bold")
     entrada_nao.place(x=270, y=170)
 
