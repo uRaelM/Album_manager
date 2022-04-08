@@ -4,54 +4,92 @@ from tkinter import ttk
 
 
 def tela4():
-    
-    def get_ano():
-        print(ano_busca.get())
+    def get_tela3():
+        window.destroy()
+        tela3()
+
+    def busca():
+        l_busca = []
+        ano = ano_busca.get()
+        v_radio_p = var.get()
+        arquivo = open("arquivo.txt", "r", encoding='utf-8')
 
 
+# O for lê a linha separando pelo pype, e verifica o valor do radio button, e logo em seguida armazena o valor do album
+# em uma lista
+        for e in arquivo:
+            linha = e.split(" | ")
+            if v_radio_p == 1:
+                if linha[1] <= ano:
+                    l_busca.append(linha[0])
+            elif v_radio_p == 2:
+                if linha[1] == ano:
+                    l_busca.append(linha[0])
+            elif v_radio_p == 3:
+                if linha[1] >= ano:
+                    l_busca.append(linha[0])
+
+#       Usei exatamente o mesmo sistema de listagem da tela 3, para listar os albuns buscados por ano na tela 4:
+#       crio um for pra criar labels com os valores armazenados na lista e crio uma posição que vai se modificando
+#       no eixo Y
+        eixo_x = 240
+        eixo_y = 250
+        for e in l_busca:
+            exibicao = Label(window, text=e, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+            exibicao.place(x=eixo_x, y=eixo_y)
+            eixo_y += 30
+
+        albuns_r = Label(window, text="Álbuns relacionados:", bg="#040404", fg="#24cb5b", font="Arial 16 bold")
+        albuns_r.place(x=185, y=200)
+
+
+#   lista para ser utilizada na combobox
     lista_anos = []
-
     arquivo = open("arquivo.txt", "r")
     for e in arquivo:
         linha = e.split(" | ")
         if linha[1] not in lista_anos:
             lista_anos.append(linha[1])
-    
     arquivo.close()
-    
     lista_anos.sort()
 
-
+#   Configurações da Tela 4
     window = Tk()
     window.title("Spotify List")
     window.geometry("600x800+650+80")
-    window.resizable(0,0)
+    window.resizable(0, 0)
     window.configure(bg="#040404")
-
+#   Botão para retornar a tela 3
+    btn1 = Button(window, text="Voltar", bg="gray", width=25, command=get_tela3)
+    btn1.place(x=200, y=700)
+#   Definição do Radio Button
     var = IntVar()
-    r_btn1 = Radiobutton(window, text="Anterior a", variable=var, value=1, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    r_btn1 = Radiobutton(window, text="Anterior a", variable=var, value=1, bg="#040404", fg="#24cb5b",
+                         font="Arial 10 bold")
     r_btn1.place(x=30, y=50)
 
-    r_btn2 = Radiobutton(window, text="Igual a", variable=var, value=2, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    r_btn2 = Radiobutton(window, text="Igual a", variable=var, value=2, bg="#040404", fg="#24cb5b",
+                         font="Arial 10 bold")
     r_btn2.place(x=30, y=100)
 
-    r_btn3 = Radiobutton(window, text="Posterior a", variable=var, value=3, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    r_btn3 = Radiobutton(window, text="Posterior a", variable=var, value=3, bg="#040404", fg="#24cb5b",
+                         font="Arial 10 bold")
     r_btn3.place(x=30, y=150)
-
+# definição da combobox
     ano_busca = ttk.Combobox(window, values=lista_anos)
     ano_busca.place(x=250, y=100)
 
-    btn_busca = Button(window, text="Buscar", bg="gray", fg="black", command=get_ano)
+    btn_busca = Button(window, text="Buscar", bg="gray", fg="black", command=busca)
     btn_busca.place(x=450, y=98)
 
-
     window.mainloop()
+
 
 def tela3():
     def get_tela2():
         window.destroy()
         tela2()
-    
+
     def get_tela4():
         window.destroy()
         tela4()
@@ -71,10 +109,11 @@ def tela3():
     window = Tk()
     window.title("Spotify List")
     window.geometry("600x800+650+80")
-    window.resizable(0,0)
+    window.resizable(0, 0)
     window.configure(bg="#040404")
 
-    btn_pesquisar = Button(window, text="Pesquisar", bg="gray", fg="black", font="Arial 12 bold", bd=2, command=get_tela4)
+    btn_pesquisar = Button(window, text="Pesquisar", bg="gray", fg="black", font="Arial 12 bold", bd=2,
+                           command=get_tela4)
     btn_pesquisar.place(x=490, y=12)
 
     lb1 = Label(window, text="Dados cadastrados", bg="#040404", fg="#24cb5b", font="Arial 16 bold")
@@ -138,7 +177,7 @@ def tela2():
             entrada_album.delete("0", "end")
             entrada_banda_artista.delete("0", "end")
             entrada_ano_lancamento.delete("0", "end")
-            
+
             valid = True
             for e in dados:
                 if (e == "" or e.isspace()):  # VALIDAÇÃO DOS DADOS
@@ -178,7 +217,7 @@ def tela2():
     window = Tk()
     window.title("Spotify List")
     window.geometry("500x250+700+300")
-    window.resizable(0,0)
+    window.resizable(0, 0)
     window.configure(bg="#040404")
 
     # LABELS E ENTRY
@@ -205,10 +244,12 @@ def tela2():
     ultimo_album.pack()
 
     var = IntVar()
-    entrada_sim = Radiobutton(window, text="Sim", variable=var, value=1, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    entrada_sim = Radiobutton(window, text="Sim", variable=var, value=1, bg="#040404", fg="#24cb5b",
+                              font="Arial 10 bold")
     entrada_sim.place(x=160, y=170)
 
-    entrada_nao = Radiobutton(window, text="Não", variable=var, value=0, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
+    entrada_nao = Radiobutton(window, text="Não", variable=var, value=0, bg="#040404", fg="#24cb5b",
+                              font="Arial 10 bold")
     entrada_nao.place(x=270, y=170)
 
     # BOTÕES
@@ -230,7 +271,7 @@ def tela1():
     window = Tk()
     window.title("Spotify List")
     window.geometry("500x250+700+300")
-    window.resizable(0,0)
+    window.resizable(0, 0)
     window.configure(bg="#040404")
     # O PARÂMETRO True DEFINE QUE ESSA logo_top.ico TAMBÉM SE APLICA PARA AS OUTRAS TELAS TOPLEVEL
     window.iconbitmap(True, "img/logo_top.ico")
@@ -240,7 +281,7 @@ def tela1():
 
     img = PhotoImage(file="img/spotify-logo.png")
 
-    btn1 = Button(window, image=img, width=160, height=120, bd=2, bg="#040404", cursor = "exchange", command=get_tela2)
+    btn1 = Button(window, image=img, width=160, height=120, bd=2, bg="#040404", cursor="exchange", command=get_tela2)
     btn1.place(x=170, y=90)
 
     window.mainloop()
