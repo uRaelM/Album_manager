@@ -2,15 +2,16 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 
+
 def tela5():
     def get_tela4():
         window.destroy()
         tela4()
-    
+
     def get_tela3():
         window.destroy()
         tela3()
-    
+
     def buscar_nome():
         for e in treeview.get_children():
             treeview.delete(e)
@@ -25,20 +26,21 @@ def tela5():
                 linha = e.split(" | ")
                 lista = [linha[2], linha[0], linha[1]]
                 nm_artista = entrada1.get().lower()
-                if nm_artista in linha[2] and nm_artista != "" and not nm_artista.isspace() :
+                if nm_artista in linha[2].lower() and nm_artista != "" and not nm_artista.isspace():
                     lista_exibir.append(lista)
-            
+
             arquivo.close()
-            
+
             lista_exibir.sort()
 
             if len(lista_exibir) == 0:
                 messagebox.showinfo(message="Nenhum resultado encontrado.")
             else:
-                var_formating = "           "
+                var_formating = "     "
+                var_formating1 = "               "
                 for e in lista_exibir:
-                    treeview.insert("", "end", values=[f"{var_formating}{e[1]}", f"{var_formating}{e[0]}", f"{var_formating}{e[2]}"])
-                
+                    treeview.insert("", "end", values=[f"{var_formating}{e[1]}", f"{var_formating1}{e[0]}",
+                                                       f"{var_formating1}{e[2]}"])
 
     window = Tk()
     window.title("Spotify List")
@@ -68,7 +70,7 @@ def tela5():
     treeview.column("1", minwidth=0, width=150)
     treeview.column("2", minwidth=0, width=150)
     treeview.column("3", minwidth=0, width=155)
-    
+
     treeview.heading("1", text="Nome do álbum")
     treeview.heading("2", text="Nome do artista")
     treeview.heading("3", text="Ano de lançamento")
@@ -106,7 +108,8 @@ def tela4():
         else:
             for e in arquivo:
                 linha = e.split(" | ")
-                lista_n = [linha[1], linha[0], linha[2]] # SERVE PARA DEIXAR NA ORDEM CERTA, PARA, NA LINHA 29, CONSEGUIR ORDENAR OS ANOS EM ORDEM CRESCENTE 
+                lista_n = [linha[1], linha[0], linha[
+                    2]]  # SERVE PARA DEIXAR NA ORDEM CERTA, PARA, NA LINHA 29, CONSEGUIR ORDENAR OS ANOS EM ORDEM CRESCENTE
                 if v_radio_p == 1 and linha[1] <= ano:
                     l_busca.append(lista_n)
                 elif v_radio_p == 2 and linha[1] == ano:
@@ -115,14 +118,13 @@ def tela4():
                     l_busca.append(lista_n)
             arquivo.close()
 
-            l_busca.sort() # ORDENA DE ACORDO COM ELEMENTO DA POSIÇÃO 0 DE CADA ELEMENTO DE l_busca
+            l_busca.sort()  # ORDENA DE ACORDO COM ELEMENTO DA POSIÇÃO 0 DE CADA ELEMENTO DE l_busca
 
-            var_formating = "           "
+            var_formating = "   "
+            var_formating1 = "              "
             for e in l_busca:
-                treeview.insert("", "end", values=[f"{var_formating}{e[1]}", f"{var_formating}{e[2]}", f"{var_formating}{e[0]}"])
-
-
-
+                treeview.insert("", "end",
+                                values=[f"{var_formating}{e[1]}", f"{var_formating}{e[2]}", f"{var_formating1}{e[0]}"])
 
     # lista para ser utilizada na combobox
     lista_anos = []
@@ -134,19 +136,20 @@ def tela4():
     arquivo.close()
     lista_anos.sort()
 
-#   Configurações da Tela 4
+    #   Configurações da Tela 4
     window = Tk()
     window.title("Spotify List")
     window.geometry("600x600+650+80")
     window.resizable(0, 0)
     window.configure(bg="#040404")
-#   Botão para retornar a tela 3
+    #   Botão para retornar a tela 3
     btn1 = Button(window, text="Ver todos", font="Arial 10 bold", bg="gray", width=25, command=get_tela3)
     btn1.place(x=70, y=540)
 
-    btn_pesquisar_nm = Button(window, text="Pesquisar por nome", font="Arial 10 bold", bg="gray", width=25, command=get_tela5)
+    btn_pesquisar_nm = Button(window, text="Pesquisar por nome", font="Arial 10 bold", bg="gray", width=25,
+                              command=get_tela5)
     btn_pesquisar_nm.place(x=350, y=540)
-#   Definição do Radio Button
+    #   Definição do Radio Button
     var = IntVar()
     r_btn1 = Radiobutton(window, text="Anterior a", variable=var, value=1, bg="#040404", fg="#24cb5b",
                          font="Arial 10 bold")
@@ -163,7 +166,7 @@ def tela4():
     lb_busca = Label(window, text="Selecione o ano", bg="#040404", fg="#24cb5b", font="Arial 12 bold")
     lb_busca.place(x=245, y=32)
 
-# definição da combobox
+    # definição da combobox
     ano_busca = ttk.Combobox(window, font="Arial 10 bold", values=lista_anos)
     ano_busca.place(x=250, y=70)
 
@@ -183,7 +186,7 @@ def tela4():
     treeview.column("1", minwidth=0, width=150)
     treeview.column("2", minwidth=0, width=150)
     treeview.column("3", minwidth=0, width=155)
-    
+
     treeview.heading("1", text="Nome do álbum")
     treeview.heading("2", text="Nome do artista")
     treeview.heading("3", text="Ano de lançamento")
@@ -238,28 +241,29 @@ def tela3():
     style = ttk.Style(window)
     style.theme_use("classic")
     style.configure("Treeview", font="Arial 10 bold", background="#ced0ba", foreground="#040404")
-    style.configure("Heading", font="Arial 12 bold", foreground="#040404")    
+    style.configure("Heading", font="Arial 12 bold", foreground="#040404")
 
     treeview.column("1", minwidth=0, width=150)
     treeview.column("2", minwidth=0, width=150)
     treeview.column("3", minwidth=0, width=155)
-    
+
     treeview.heading("1", text="Nome do álbum")
     treeview.heading("2", text="Nome do artista")
     treeview.heading("3", text="Ano de lançamento")
 
     treeview.place(x=70, y=100)
 
-    var_formating = "           "
+    var_formating = "   "
+    var_formating1 = "              "
     registros.sort()
     for e in registros:
-        treeview.insert("", "end", values=[f"{var_formating}{e[0]}", f"{var_formating}{e[2]}", f"{var_formating}{e[1]}"])
+        treeview.insert("", "end",
+                        values=[f"{var_formating}{e[0]}", f"{var_formating}{e[2]}", f"{var_formating1}{e[1]}"])
 
     window.mainloop()
 
 
 def tela2():
-
     def get_tela3():
         window.destroy()
         tela3()
@@ -318,8 +322,9 @@ def tela2():
                         arquivo.close()
                         messagebox.showinfo(message="Dados cadastrados com sucesso !")
                     else:
-                        messagebox.showerror(message="Esse álbum já existe, ou você não preencheu os dados corretamente.")
-                        
+                        messagebox.showerror(
+                            message="Esse álbum já existe, ou você não preencheu os dados corretamente.")
+
                 else:
                     if dados[0] not in albuns_salvos and dados[1].isnumeric():
                         dados_p_salvar = " | ".join(dados)
@@ -332,7 +337,8 @@ def tela2():
                         arquivo.close()
                         messagebox.showinfo(message="Dados cadastrados com sucesso !")
                     else:
-                        messagebox.showerror(message="Esse álbum já existe, ou você não preencheu os dados corretamente.")
+                        messagebox.showerror(
+                            message="Esse álbum já existe, ou você não preencheu os dados corretamente.")
             else:
                 messagebox.showerror(message="Preencha todos os campos.")
 
