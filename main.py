@@ -36,19 +36,17 @@ def tela5():
             if len(lista_exibir) == 0:
                 messagebox.showinfo(message="Nenhum resultado encontrado.")
             else:
-                var_formating = "     "
-                var_formating1 = "               "
                 for e in lista_exibir:
-                    treeview.insert("", "end", values=[f"{var_formating}{e[1]}", f"{var_formating}{e[0]}",
-                                                       f"{var_formating1}{e[2]}"])
-
+                    treeview.insert("", "end", values=[f"{e[1]}", f"{e[0]}", f"{e[2]}"])
+    
+    # TELA 5
     window = Tk()
     window.title("Spotify List")
     window.geometry("600x600+650+80")
     window.resizable(0, 0)
     window.configure(bg="#040404")
 
-    lb1 = Label(window, text="Digite um nome", font="Arial 10 bold", bg="#040404", fg="#24cb5b")
+    lb1 = Label(window, text="Digite um nome", font="Arial 12 bold", bg="#040404", fg="#24cb5b")
     lb1.place(x=66, y=50)
 
     entrada1 = Entry(window, width=30)
@@ -59,7 +57,7 @@ def tela5():
 
     treeview = ttk.Treeview(window, columns=("1", "2", "3"), show="headings")
     scroll = ttk.Scrollbar(window, orient="vertical", command=treeview.yview)
-    scroll.place(x=525, y=150, height=227)
+    scroll.place(x=552, y=150, height=227)
     treeview.configure(yscrollcommand=scroll.set)
 
     style = ttk.Style(window)
@@ -67,15 +65,15 @@ def tela5():
     style.configure("Treeview", font="Arial 10 bold", background="#ced0ba", foreground="#040404")
     style.configure("Heading", font="Arial 12 bold", foreground="#040404")
 
-    treeview.column("1", minwidth=0, width=150)
-    treeview.column("2", minwidth=0, width=150)
-    treeview.column("3", minwidth=0, width=155)
+    treeview.column("1", minwidth=0, width=170)
+    treeview.column("2", minwidth=0, width=170)
+    treeview.column("3", minwidth=0, width=170)
 
     treeview.heading("1", text="Nome do álbum")
     treeview.heading("2", text="Nome do artista")
     treeview.heading("3", text="Ano de lançamento")
 
-    treeview.place(x=70, y=150)
+    treeview.place(x=40, y=150)
 
     btn2 = Button(window, text="Ver todos", font="Arial 10 bold", bg="gray", width=25, command=get_tela3)
     btn2.place(x=70, y=540)
@@ -108,8 +106,7 @@ def tela4():
         else:
             for e in arquivo:
                 linha = e.split(" | ")
-                lista_n = [linha[1], linha[0], linha[
-                    2]]  # SERVE PARA DEIXAR NA ORDEM CERTA, PARA, NA LINHA 29, CONSEGUIR ORDENAR OS ANOS EM ORDEM CRESCENTE
+                lista_n = [linha[1], linha[0], linha[2]]  # SERVE PARA DEIXAR NA ORDEM CERTA, PARA, NA LINHA 29, CONSEGUIR ORDENAR OS ANOS EM ORDEM CRESCENTE
                 if v_radio_p == 1 and linha[1] <= ano:
                     l_busca.append(lista_n)
                 elif v_radio_p == 2 and linha[1] == ano:
@@ -120,13 +117,10 @@ def tela4():
 
             l_busca.sort()  # ORDENA DE ACORDO COM ELEMENTO DA POSIÇÃO 0 DE CADA ELEMENTO DE l_busca
 
-            var_formating = "   "
-            var_formating1 = "              "
             for e in l_busca:
-                treeview.insert("", "end",
-                                values=[f"{var_formating}{e[1]}", f"{var_formating}{e[2]}", f"{var_formating1}{e[0]}"])
+                treeview.insert("", "end", values=[f"{e[1]}", f"{e[2]}", f"{e[0]}"])
 
-    # lista para ser utilizada na combobox
+    # LISTA PARA SER UTILIZADA NA COMBOBOX
     lista_anos = []
     arquivo = open("arquivo.txt", "r", encoding="utf-8")
     for e in arquivo:
@@ -136,37 +130,33 @@ def tela4():
     arquivo.close()
     lista_anos.sort()
 
-    #   Configurações da Tela 4
+    # CONFIGURAÇÕES DA TELA 4
     window = Tk()
     window.title("Spotify List")
     window.geometry("600x600+650+80")
     window.resizable(0, 0)
     window.configure(bg="#040404")
-    #   Botão para retornar a tela 3
+    # BOTÃO PARA RETORNAR À TELA 3
     btn1 = Button(window, text="Ver todos", font="Arial 10 bold", bg="gray", width=25, command=get_tela3)
     btn1.place(x=70, y=540)
 
-    btn_pesquisar_nm = Button(window, text="Pesquisar por nome", font="Arial 10 bold", bg="gray", width=25,
-                              command=get_tela5)
+    btn_pesquisar_nm = Button(window, text="Pesquisar por nome", font="Arial 10 bold", bg="gray", width=25, command=get_tela5)
     btn_pesquisar_nm.place(x=350, y=540)
-    #   Definição do Radio Button
+    # RADIO BUTTONS
     var = IntVar()
-    r_btn1 = Radiobutton(window, text="Anterior a", variable=var, value=1, bg="#040404", fg="#24cb5b",
-                         font="Arial 10 bold")
+    r_btn1 = Radiobutton(window, text="Anterior a", variable=var, value=1, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
     r_btn1.place(x=30, y=50)
 
-    r_btn2 = Radiobutton(window, text="Igual a", variable=var, value=2, bg="#040404", fg="#24cb5b",
-                         font="Arial 10 bold")
+    r_btn2 = Radiobutton(window, text="Igual a", variable=var, value=2, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
     r_btn2.place(x=30, y=100)
 
-    r_btn3 = Radiobutton(window, text="Posterior a", variable=var, value=3, bg="#040404", fg="#24cb5b",
-                         font="Arial 10 bold")
+    r_btn3 = Radiobutton(window, text="Posterior a", variable=var, value=3, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
     r_btn3.place(x=30, y=150)
 
     lb_busca = Label(window, text="Selecione o ano", bg="#040404", fg="#24cb5b", font="Arial 12 bold")
     lb_busca.place(x=245, y=32)
 
-    # definição da combobox
+    # DEFINIÇÃO DO COMBOBOX (DROP DOWN)
     ano_busca = ttk.Combobox(window, font="Arial 10 bold", values=lista_anos)
     ano_busca.place(x=250, y=70)
 
@@ -175,7 +165,7 @@ def tela4():
 
     treeview = ttk.Treeview(window, columns=("1", "2", "3"), show="headings")
     scroll = ttk.Scrollbar(window, orient="vertical", command=treeview.yview)
-    scroll.place(x=525, y=260, height=227)
+    scroll.place(x=552, y=260, height=227)
     treeview.configure(yscrollcommand=scroll.set)
 
     style = ttk.Style(window)
@@ -183,15 +173,15 @@ def tela4():
     style.configure("Treeview", font="Arial 10 bold", background="#ced0ba", foreground="#040404")
     style.configure("Heading", font="Arial 12 bold", foreground="#040404")
 
-    treeview.column("1", minwidth=0, width=150)
-    treeview.column("2", minwidth=0, width=150)
-    treeview.column("3", minwidth=0, width=155)
+    treeview.column("1", minwidth=0, width=170)
+    treeview.column("2", minwidth=0, width=170)
+    treeview.column("3", minwidth=0, width=170)
 
     treeview.heading("1", text="Nome do álbum")
     treeview.heading("2", text="Nome do artista")
     treeview.heading("3", text="Ano de lançamento")
 
-    treeview.place(x=70, y=260)
+    treeview.place(x=40, y=260)
 
     window.mainloop()
 
@@ -223,8 +213,7 @@ def tela3():
     window.resizable(0, 0)
     window.configure(bg="#040404")
 
-    btn_pesquisar = Button(window, text="Pesquisar", bg="gray", font="Arial 12 bold", bd=2,
-                           command=get_tela4)
+    btn_pesquisar = Button(window, text="Pesquisar", bg="gray", font="Arial 12 bold", bd=2, command=get_tela4)
     btn_pesquisar.place(x=490, y=12)
 
     lb1 = Label(window, text="Dados cadastrados", bg="#040404", fg="#24cb5b", font="Arial 16 bold")
@@ -235,7 +224,7 @@ def tela3():
 
     treeview = ttk.Treeview(window, columns=("1", "2", "3"), show="headings")
     scroll = ttk.Scrollbar(window, orient="vertical", command=treeview.yview)
-    scroll.place(x=525, y=100, height=227)
+    scroll.place(x=552, y=100, height=227)
     treeview.configure(yscrollcommand=scroll.set)
 
     style = ttk.Style(window)
@@ -243,22 +232,19 @@ def tela3():
     style.configure("Treeview", font="Arial 10 bold", background="#ced0ba", foreground="#040404")
     style.configure("Heading", font="Arial 12 bold", foreground="#040404")
 
-    treeview.column("1", minwidth=0, width=150)
-    treeview.column("2", minwidth=0, width=150)
-    treeview.column("3", minwidth=0, width=155)
+    treeview.column("1", minwidth=0, width=170)
+    treeview.column("2", minwidth=0, width=170)
+    treeview.column("3", minwidth=0, width=170)
 
     treeview.heading("1", text="Nome do álbum")
     treeview.heading("2", text="Nome do artista")
     treeview.heading("3", text="Ano de lançamento")
 
-    treeview.place(x=70, y=100)
+    treeview.place(x=40, y=100)
 
-    var_formating = "   "
-    var_formating1 = "              "
     registros.sort()
     for e in registros:
-        treeview.insert("", "end",
-                        values=[f"{var_formating}{e[0]}", f"{var_formating}{e[2]}", f"{var_formating1}{e[1]}"])
+        treeview.insert("", "end", values=[f"{e[0]}", f"{e[2]}", f"{e[1]}"])
 
     window.mainloop()
 
@@ -274,13 +260,13 @@ def tela2():
         if status != False:
             dados = []
 
-            ialbum = str(entrada_album.get().lower())
+            ialbum = str(entrada_album.get())
             dados.append(ialbum)
 
             ilancamento = str(entrada_ano_lancamento.get())
             dados.append(ilancamento)
 
-            ibanda_artista = str(entrada_banda_artista.get().lower())
+            ibanda_artista = str(entrada_banda_artista.get())
             dados.append(ibanda_artista)
 
             isim_nao = var.get()
@@ -289,7 +275,7 @@ def tela2():
             else:
                 dados.append("não")
 
-            # FAZ OS ENTRYS SEREM LIMPOS
+            # LIMPA OS ENTRYS
             entrada_album.delete("0", "end")
             entrada_banda_artista.delete("0", "end")
             entrada_ano_lancamento.delete("0", "end")
@@ -368,25 +354,21 @@ def tela2():
     entrada_banda_artista = Entry(window, width=30)
     entrada_banda_artista.pack()
 
-    ultimo_album = Label(window, text="Ultimo album de lançamento(Sim/Não):", font="Arial 14 bold", fg="#24cb5b",
-                         bg="#040404")
+    ultimo_album = Label(window, text="Ultimo album de lançamento(Sim/Não):", font="Arial 14 bold", fg="#24cb5b", bg="#040404")
     ultimo_album.pack()
 
     var = IntVar()
-    entrada_sim = Radiobutton(window, text="Sim", variable=var, value=1, bg="#040404", fg="#24cb5b",
-                              font="Arial 10 bold")
+    entrada_sim = Radiobutton(window, text="Sim", variable=var, value=1, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
     entrada_sim.place(x=160, y=170)
 
-    entrada_nao = Radiobutton(window, text="Não", variable=var, value=2, bg="#040404", fg="#24cb5b",
-                              font="Arial 10 bold")
+    entrada_nao = Radiobutton(window, text="Não", variable=var, value=2, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
     entrada_nao.place(x=270, y=170)
 
     # BOTÕES
     botao_salvar = Button(window, text="Cadastrar", bg="#040404", fg="#24cb5b", font="Arial 10 bold", command=store)
     botao_salvar.place(x=150, y=200)
 
-    botao_buscar = Button(window, text="Lista de álbuns", bg="#040404", fg="#24cb5b", font="Arial 10 bold",
-                          command=get_tela3)
+    botao_buscar = Button(window, text="Lista de álbuns", bg="#040404", fg="#24cb5b", font="Arial 10 bold", command=get_tela3)
     botao_buscar.place(x=260, y=200)
 
     window.mainloop()
