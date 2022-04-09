@@ -39,7 +39,7 @@ def tela5():
                 var_formating = "     "
                 var_formating1 = "               "
                 for e in lista_exibir:
-                    treeview.insert("", "end", values=[f"{var_formating}{e[1]}", f"{var_formating1}{e[0]}",
+                    treeview.insert("", "end", values=[f"{var_formating}{e[1]}", f"{var_formating}{e[0]}",
                                                        f"{var_formating1}{e[2]}"])
 
     window = Tk()
