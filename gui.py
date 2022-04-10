@@ -143,8 +143,8 @@ class App(GetTelas, Crud):
         self.r_btn3 = Radiobutton(self.window, text="Posterior a", variable=self.var, value=3, bg="#040404", fg="#24cb5b", font="Arial 10 bold")
         self.r_btn3.place(x=30, y=150)
 
-        self.lb_busca = Label(self.window, text="Selecione o ano", bg="#040404", fg="#24cb5b", font="Arial 12 bold")
-        self.lb_busca.place(x=245, y=32)
+        self.lb_busca = Label(self.window, text="Selecione o ano do álbum", bg="#040404", fg="#24cb5b", font="Arial 12 bold")
+        self.lb_busca.place(x=240, y=32)
 
         # DEFINIÇÃO DO COMBOBOX (DROP DOWN)
         self.ano_busca = ttk.Combobox(self.window, font="Arial 10 bold", values=self.lista_anos)
@@ -184,7 +184,7 @@ class App(GetTelas, Crud):
         self.window.configure(bg="#040404")
         self.window.focus_force()
 
-        self.lb1 = Label(self.window, text="Digite um nome", font="Arial 12 bold", bg="#040404", fg="#24cb5b")
+        self.lb1 = Label(self.window, text="Digite o nome do(a) artista/banda", font="Arial 12 bold", bg="#040404", fg="#24cb5b")
         self.lb1.place(x=66, y=50)
 
         self.entrada1 = Entry(self.window, width=30)
