@@ -1,7 +1,7 @@
 from modules import * # TKINTER
 
 
-# PARTE QUE ACESSA O ARQUIVO PARA REALIZAR DETERMINADA AÇÃO QUE FOI REQUISITADA
+# PARTE QUE ACESSA O ARQUIVO PARA REALIZAR DETERMINADA AÇÃO
 class ModelParaCrud():
     def get_registros(self):
         self.registros = []
@@ -97,13 +97,13 @@ class ModelParaCrud():
                         self.arquivo.close()
                         messagebox.showinfo(message="Dados cadastrados com sucesso !")
                     else:
-                        messagebox.showerror(message="Esse álbum já existe, ou você não preencheu os dados corretamente.")
+                        messagebox.showerror(message="Você não preencheu os dados corretamente.")
 
                 else:
                     if self.dados[0].lower() not in self.albuns_salvos and self.dados[1].isnumeric():
                         self.dados_p_salvar = " | ".join(self.dados)
 
-                        self.dados_para_salvar = self.dados_p_salvar + '\n'
+                        self.dados_para_salvar = self.dados_p_salvar + "\n"
 
                         self.arquivo = open("arquivo.txt", "a", encoding="utf-8")
                         self.arquivo.write(self.dados_para_salvar)

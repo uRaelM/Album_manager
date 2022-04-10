@@ -4,7 +4,7 @@ from model import *   # IMPORTANDO TUDO DA model.py
 
 # LÓGICA DA APLICAÇÃO
 # PARA MUDAR DE TELA
-class Get_Telas():
+class GetTelas():
     def get_tela2(self):
         self.window.destroy()
         self.tela2()
@@ -57,13 +57,13 @@ class Crud(ModelParaCrud):
 
         self.ano = self.ano_busca.get()
         self.v_radio_p = self.var.get()
+        if self.ano.isnumeric():
+            self.l_busca = self.buscar()
 
-        self.l_busca = self.buscar()
+            self.l_busca.sort()  # ORDENA DE ACORDO COM ELEMENTO DA POSIÇÃO 0 DE CADA ELEMENTO DE l_busca
 
-        self.l_busca.sort()  # ORDENA DE ACORDO COM ELEMENTO DA POSIÇÃO 0 DE CADA ELEMENTO DE l_busca
-
-        for e in self.l_busca:
-            self.treeview.insert("", "end", values=[f"{e[1]}", f"{e[2]}", f"{e[0]}"])
+            for e in self.l_busca:
+                self.treeview.insert("", "end", values=[f"{e[1]}", f"{e[2]}", f"{e[0]}"])
     
     def pesquisar_nome(self):
         for e in self.treeview.get_children():

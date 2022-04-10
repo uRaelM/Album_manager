@@ -3,16 +3,17 @@ from domain import *   # IMPORTANDO TUDO DO domain.py
 
 
 # APLICAÇÃO
-class App(Get_Telas, Crud):
+class App(GetTelas, Crud):
     def __init__(self):
-        self.tela_main()
+        self.tela1()
     
-    def tela_main(self):
+    def tela1(self):
         self.window = Tk()
         self.window.title("Spotify List")
         self.window.geometry("500x250+700+300")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
+        self.window.focus_force()
         # O PARÂMETRO True DEFINE QUE ESSA logo_top.ico TAMBÉM SE APLICA PARA AS OUTRAS TELAS TOPLEVEL
         self.window.iconbitmap(True, "img/logo_top.ico")
 
@@ -31,6 +32,7 @@ class App(Get_Telas, Crud):
         self.window.geometry("500x250+700+300")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
+        self.window.focus_force()
 
         # LABELS E ENTRY
         self.album = Label(self.window, text="Álbum:", font="Arial 14 bold", fg="#24cb5b", bg="#040404")
@@ -78,6 +80,7 @@ class App(Get_Telas, Crud):
         self.window.geometry("600x400+650+80")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
+        self.window.focus_force()
 
         self.btn_pesquisar = Button(self.window, text="Pesquisar", bg="gray", font="Arial 12 bold", bd=2, command=self.get_tela4)
         self.btn_pesquisar.place(x=490, y=12)
@@ -122,6 +125,7 @@ class App(Get_Telas, Crud):
         self.window.geometry("600x600+650+80")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
+        self.window.focus_force()
         # BOTÃO PARA RETORNAR À TELA 3
         self.btn1 = Button(self.window, text="Ver todos", font="Arial 10 bold", bg="gray", width=25, command=self.get_tela3)
         self.btn1.place(x=70, y=520)
@@ -178,6 +182,7 @@ class App(Get_Telas, Crud):
         self.window.geometry("600x600+650+80")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
+        self.window.focus_force()
 
         self.lb1 = Label(self.window, text="Digite um nome", font="Arial 12 bold", bg="#040404", fg="#24cb5b")
         self.lb1.place(x=66, y=50)
