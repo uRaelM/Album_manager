@@ -43,7 +43,7 @@ def tela5():
     window = Tk()
     window.title("Spotify List")
     window.geometry("600x600+650+80")
-    window.resizable(0, 0)
+    window.resizable(False, False)
     window.configure(bg="#040404")
 
     lb1 = Label(window, text="Digite um nome", font="Arial 12 bold", bg="#040404", fg="#24cb5b")
@@ -134,7 +134,7 @@ def tela4():
     window = Tk()
     window.title("Spotify List")
     window.geometry("600x600+650+80")
-    window.resizable(0, 0)
+    window.resizable(False, False)
     window.configure(bg="#040404")
     # BOTÃO PARA RETORNAR À TELA 3
     btn1 = Button(window, text="Ver todos", font="Arial 10 bold", bg="gray", width=25, command=get_tela3)
@@ -210,7 +210,7 @@ def tela3():
     window = Tk()
     window.title("Spotify List")
     window.geometry("600x400+650+80")
-    window.resizable(0, 0)
+    window.resizable(False, False)
     window.configure(bg="#040404")
 
     btn_pesquisar = Button(window, text="Pesquisar", bg="gray", font="Arial 12 bold", bd=2, command=get_tela4)
@@ -332,7 +332,7 @@ def tela2():
     window = Tk()
     window.title("Spotify List")
     window.geometry("500x250+700+300")
-    window.resizable(0, 0)
+    window.resizable(False, False)
     window.configure(bg="#040404")
 
     # LABELS E ENTRY
@@ -382,7 +382,7 @@ def tela1():
     window = Tk()
     window.title("Spotify List")
     window.geometry("500x250+700+300")
-    window.resizable(0, 0)
+    window.resizable(False, False)
     window.configure(bg="#040404")
     # O PARÂMETRO True DEFINE QUE ESSA logo_top.ico TAMBÉM SE APLICA PARA AS OUTRAS TELAS TOPLEVEL
     window.iconbitmap(True, "img/logo_top.ico")
