@@ -54,7 +54,7 @@ class App(GetTelas, Crud):
         self.entrada_banda_artista = Entry(self.window, width=30)
         self.entrada_banda_artista.pack()
 
-        self.ultimo_album = Label(self.window, text="Ultimo album de lançamento(Sim/Não):", font="Arial 14 bold", fg="#24cb5b", bg="#040404")
+        self.ultimo_album = Label(self.window, text="Último álbum de lançamento(Sim/Não):", font="Arial 14 bold", fg="#24cb5b", bg="#040404")
         self.ultimo_album.pack()
 
         self.var = IntVar()
