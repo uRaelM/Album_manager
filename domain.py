@@ -24,32 +24,60 @@ class GetTelas():
 
 # LÓGICA DA APLICAÇÃO
 class Crud(ModelParaCrud):
+    def iniciar(self):
+        try:
+            self.criar_arquivo()
+        except:
+            messagebox.showerror(message="Não foi possível iniciar o programa corretamente")
+
     def salvar(self):
         self.status = messagebox.askyesno(message="Tem certeza que deseja cadastrar ?")
         if self.status != False:
             self.dados = []
 
-            self.ialbum = str(self.entrada_album.get())
+            self.ialbum = self.entrada_album.get()
             self.dados.append(self.ialbum)
 
-            self.ilancamento = str(self.entrada_ano_lancamento.get())
+            self.ilancamento = self.entrada_ano_lancamento.get()
             self.dados.append(self.ilancamento)
 
-            self.ibanda_artista = str(self.entrada_banda_artista.get())
+            self.ibanda_artista = self.entrada_banda_artista.get()
             self.dados.append(self.ibanda_artista)
 
             self.isim_nao = self.var.get()
             if self.isim_nao == 1:
-                self.dados.append("sim")
+                self.dados.append("Sim")
             else:
-                self.dados.append("não")
+                self.dados.append("Não")
 
             # LIMPA OS ENTRYS
             self.entrada_album.delete("0", "end")
             self.entrada_banda_artista.delete("0", "end")
             self.entrada_ano_lancamento.delete("0", "end")
 
-            self.store()
+            # VALIDAÇÃO DE DADOS
+            self.valid = True
+            for e in self.dados:
+                if e == "" or e.isspace():  # VALIDAÇÃO DOS DADOS
+                    self.valid = False
+                    break
+            if self.valid == True:
+                self.albuns_salvos = self.pegar_albuns() # VERIFICANDO QUAIS ÁLBUNS ESTÃO SALVOS
+
+                if self.dados[0].lower() not in self.albuns_salvos:
+                    if self.dados[1].isnumeric():
+                        self.dados_p_salvar = " | ".join(self.dados)
+
+                        self.dados_para_salvar = self.dados_p_salvar + "\n"
+
+                        self.store() # ARMAZENA OS DADOS NO arquivo.txt
+                        messagebox.showinfo(message="Dados cadastrados com sucesso !")
+                    else:
+                        messagebox.showinfo(message="Preencha os campos corretamente")
+                else:
+                    messagebox.showinfo(message="Esse álbum já está cadastrado")
+            else:
+                messagebox.showinfo(message="Preencha os campos corretamente")
     
     def pesquisar(self):
         for e in self.treeview.get_children():
@@ -58,35 +86,55 @@ class Crud(ModelParaCrud):
         self.ano = self.ano_busca.get()
         self.v_radio_p = self.var.get()
         if self.ano.isnumeric():
-            self.l_busca = self.buscar()
-
-            self.l_busca.sort()  # ORDENA DE ACORDO COM ELEMENTO DA POSIÇÃO 0 DE CADA ELEMENTO DE l_busca
-
-            for e in self.l_busca:
-                self.treeview.insert("", "end", values=[f"{e[1]}", f"{e[2]}", f"{e[0]}"])
+            try:
+                self.l_busca = self.buscar()
+            except:
+                messagebox.showerror(message="Não há álbuns cadastrados")
+            else:
+                if len(self.l_busca) == 0:
+                    messagebox.showinfo(message="Nenhum resultado encontrado")
+                else:
+                    self.l_busca.sort()  # ORDENA DE ACORDO COM ELEMENTO DA POSIÇÃO 0 DE CADA ELEMENTO DE l_busca
+                    for e in self.l_busca:
+                        self.treeview.insert("", "end", values=[f"{e[1]}", f"{e[2]}", f"{e[0]}"])
+        else:
+            messagebox.showerror(message="Preencha os dados corretamente")
     
     def pesquisar_nome(self):
         for e in self.treeview.get_children():
             self.treeview.delete(e)
         
-        self.lista_exibir = self.buscar_nome()
+        self.nm_artista = self.entrada1.get().lower()
 
-        self.lista_exibir.sort()
+        if self.nm_artista != "" and not self.nm_artista.isspace():
 
-        if len(self.lista_exibir) == 0:
-            messagebox.showinfo(message="Nenhum resultado encontrado.")
+            try:
+                self.lista_exibir = self.buscar_nome()
+            except:
+                messagebox.showerror(message="Não há álbuns cadastrados.")
+            else:
+
+                if len(self.lista_exibir) == 0:
+                    messagebox.showinfo(message="Nenhum resultado encontrado.")
+                else:
+                    self.lista_exibir.sort()
+                    for e in self.lista_exibir:
+                        self.treeview.insert("", "end", values=[f"{e[1]}", f"{e[0]}", f"{e[2]}"])
         else:
-            for e in self.lista_exibir:
-                self.treeview.insert("", "end", values=[f"{e[1]}", f"{e[0]}", f"{e[2]}"]) 
+            messagebox.showerror(message="Preencha o campo corretamente") 
     
     def lista_combobox(self):
         self.lista_anos = self.combobox_list()
-        self.lista_anos.sort()
+        if len(self.lista_anos) != 0:
+            self.lista_anos.sort()
 
         return self.lista_anos
     
     def obter_registros(self):
+
         self.registros = self.get_registros()
-        self.registros.sort()
+
+        if len(self.registros) != 0:
+            self.registros.sort()
 
         return self.registros

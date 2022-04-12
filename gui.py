@@ -5,6 +5,7 @@ from domain import *   # IMPORTANDO TUDO DO domain.py
 # APLICAÇÃO
 class App(GetTelas, Crud):
     def __init__(self):
+        self.iniciar()
         self.tela1()
     
     def tela1(self):
