@@ -62,9 +62,9 @@ class Crud(ModelParaCrud):
                     self.valid = False
                     break
             if self.valid == True:
-                self.albuns_salvos = self.pegar_albuns() # VERIFICANDO QUAIS ÁLBUNS ESTÃO SALVOS
-
-                if self.dados[0].lower() not in self.albuns_salvos:
+                try:
+                    self.albuns_salvos = self.pegar_albuns() # VERIFICANDO QUAIS ÁLBUNS ESTÃO SALVOS
+                except:
                     if self.dados[1].isnumeric():
                         self.dados_p_salvar = " | ".join(self.dados)
 
@@ -74,8 +74,19 @@ class Crud(ModelParaCrud):
                         messagebox.showinfo(message="Dados cadastrados com sucesso !")
                     else:
                         messagebox.showinfo(message="Preencha os campos corretamente")
-                else:
-                    messagebox.showinfo(message="Esse álbum já está cadastrado")
+                else:                    
+                    if self.dados[0].lower() not in self.albuns_salvos:
+                        if self.dados[1].isnumeric():
+                            self.dados_p_salvar = " | ".join(self.dados)
+
+                            self.dados_para_salvar = self.dados_p_salvar + "\n"
+
+                            self.store() # ARMAZENA OS DADOS NO arquivo.txt
+                            messagebox.showinfo(message="Dados cadastrados com sucesso !")
+                        else:
+                            messagebox.showinfo(message="Preencha os campos corretamente")
+                    else:
+                        messagebox.showinfo(message="Esse álbum já está cadastrado")
             else:
                 messagebox.showinfo(message="Preencha os campos corretamente")
     
@@ -124,17 +135,25 @@ class Crud(ModelParaCrud):
             messagebox.showerror(message="Preencha o campo corretamente") 
     
     def lista_combobox(self):
-        self.lista_anos = self.combobox_list()
-        if len(self.lista_anos) != 0:
-            self.lista_anos.sort()
+        try:
+            self.lista_anos = self.combobox_list()
+        except:
+            self.lista_anos = []
+            messagebox.showinfo(message="Não há dados cadastrados")
+        else:
+            if len(self.lista_anos) != 0:
+                self.lista_anos.sort()
 
         return self.lista_anos
     
     def obter_registros(self):
-
-        self.registros = self.get_registros()
-
-        if len(self.registros) != 0:
-            self.registros.sort()
+        try:
+            self.registros = self.get_registros()
+        except:
+            self.registros = []
+            messagebox.showinfo(message="Não há dados cadastrados")
+        else:
+            if len(self.registros) != 0:
+                self.registros.sort()
 
         return self.registros
