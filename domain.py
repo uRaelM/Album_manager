@@ -66,22 +66,22 @@ class Crud(ModelParaCrud):
                     self.albuns_salvos = self.pegar_albuns() # VERIFICANDO QUAIS ÁLBUNS ESTÃO SALVOS
                 except:
                     if self.dados[1].isnumeric():
-                        self.dados_p_salvar = " | ".join(self.dados)
+                        #self.dados_p_salvar = " | ".join(self.dados)
 
-                        self.dados_para_salvar = self.dados_p_salvar + "\n"
+                        #self.dados_para_salvar = self.dados_p_salvar + "\n"
 
-                        self.store() # ARMAZENA OS DADOS NO arquivo.txt
+                        self.store() # ARMAZENA OS DADOS NO arquivo.json
                         messagebox.showinfo(message="Dados cadastrados com sucesso !")
                     else:
                         messagebox.showinfo(message="Preencha os campos corretamente")
                 else:                    
                     if self.dados[0].lower() not in self.albuns_salvos:
                         if self.dados[1].isnumeric():
-                            self.dados_p_salvar = " | ".join(self.dados)
+                            #self.dados_p_salvar = " | ".join(self.dados)
 
-                            self.dados_para_salvar = self.dados_p_salvar + "\n"
+                            #self.dados_para_salvar = self.dados_p_salvar + "\n"
 
-                            self.store() # ARMAZENA OS DADOS NO arquivo.txt
+                            self.store() # ARMAZENA OS DADOS NO arquivo.json
                             messagebox.showinfo(message="Dados cadastrados com sucesso !")
                         else:
                             messagebox.showinfo(message="Preencha os campos corretamente")
@@ -115,7 +115,7 @@ class Crud(ModelParaCrud):
         for e in self.treeview.get_children():
             self.treeview.delete(e)
         
-        self.nm_artista = self.entrada1.get().lower()
+        self.nm_artista = self.entrada1.get()
 
         if self.nm_artista != "" and not self.nm_artista.isspace():
 
@@ -157,3 +157,7 @@ class Crud(ModelParaCrud):
                 self.registros.sort()
 
         return self.registros
+    
+    def exibir_registros(self):
+        for e in self.registros:
+            self.treeview.insert("", "end", values=[f"{e[0]}", f"{e[2]}", f"{e[1]}"])
