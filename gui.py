@@ -11,7 +11,7 @@ class App(GetTelas, Crud):
     def tela1(self):
         self.window = Tk()
         self.window.title("Spotify List")
-        self.window.geometry("500x250+700+300")
+        self.window.geometry("500x250+450+200")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
         self.window.focus_force()
@@ -30,7 +30,7 @@ class App(GetTelas, Crud):
     def tela2(self):
         self.window = Tk()
         self.window.title("Spotify List")
-        self.window.geometry("500x250+700+300")
+        self.window.geometry("500x250+450+200")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
         self.window.focus_force()
@@ -78,7 +78,7 @@ class App(GetTelas, Crud):
 
         self.window = Tk()
         self.window.title("Spotify List")
-        self.window.geometry("600x400+650+80")
+        self.window.geometry("600x400+400+150")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
         self.window.focus_force()
@@ -112,8 +112,7 @@ class App(GetTelas, Crud):
 
         self.treeview.place(x=40, y=100)
 
-        for e in self.registros:
-            self.treeview.insert("", "end", values=[f"{e[0]}", f"{e[2]}", f"{e[1]}"])
+        self.exibir_registros()
 
         self.window.mainloop()
     
@@ -123,7 +122,7 @@ class App(GetTelas, Crud):
 
         self.window = Tk()
         self.window.title("Spotify List")
-        self.window.geometry("600x600+650+80")
+        self.window.geometry("600x600+400+70")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
         self.window.focus_force()
@@ -180,7 +179,7 @@ class App(GetTelas, Crud):
     def tela5(self):
         self.window = Tk()
         self.window.title("Spotify List")
-        self.window.geometry("600x600+650+80")
+        self.window.geometry("600x600+400+70")
         self.window.resizable(False, False)
         self.window.configure(bg="#040404")
         self.window.focus_force()
